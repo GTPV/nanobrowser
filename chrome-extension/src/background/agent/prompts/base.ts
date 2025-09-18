@@ -34,7 +34,11 @@ abstract class BasePrompt {
     if (rawElementsText !== '') {
       const scrollInfo = `[Scroll info of current page] window.scrollY: ${browserState.scrollY}, document.body.scrollHeight: ${browserState.scrollHeight}, window.visualViewport.height: ${browserState.visualViewportHeight}, visual viewport height as percentage of scrollable distance: ${Math.round((browserState.visualViewportHeight / (browserState.scrollHeight - browserState.visualViewportHeight)) * 100)}%\n`;
       logger.info(scrollInfo);
+      logger.group('Element Filtering before and after wrapping');
+      logger.debug('Raw elements Text: ', rawElementsText);
       const elementsText = wrapUntrustedContent(rawElementsText);
+      logger.debug('Wrapped elements Text: ', elementsText);
+      logger.groupEnd();
       formattedElementsText = `${scrollInfo}[Start of page]\n${elementsText}\n[End of page]\n`;
     } else {
       formattedElementsText = 'empty page';

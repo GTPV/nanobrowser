@@ -371,7 +371,11 @@ export class ActionBuilder {
       const rawMsg = t('act_cache_ok', [input.content]);
       this.context.emitEvent(Actors.NAVIGATOR, ExecutionState.ACT_OK, rawMsg);
 
+      logger.group('CacheContent - before and after wrapping');
+      logger.info('Raw cache content: \n', rawMsg);
       const msg = wrapUntrustedContent(rawMsg);
+      logger.info('Wrapped cache content: \n', msg);
+      logger.groupEnd();
       return new ActionResult({ extractedContent: msg, includeInMemory: true });
     }, cacheContentActionSchema);
     actions.push(cacheContent);
